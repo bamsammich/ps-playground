@@ -50,7 +50,7 @@ function Initialize-Profile {
 
 $psgallery_modules = @('posh-git', 'oh-my-posh', 'Get-ChildItemColor')
 $git_ps_profile_url = 'https://raw.githubusercontent.com/bamsammich/PowerShell/master/Profile/Profile.ps1'
-$git_ps_theme_url = ''
+$git_ps_theme_url = 'https://raw.githubusercontent.com/bamsammich/PowerShell/master/Themes/Paradox_custom.psm1'
 
 # Ensure Profile used by this session exists
 Initialize-Profile
@@ -58,10 +58,20 @@ Initialize-Profile
 # Import defined PSGallery Modules
 $psgallery_modules | Import-PSGalleryModule
 
+# Set Theme
+$theme_name = ($git_ps_theme_url -split '/' | Select-Object -Last 1).Trim()
+$local_theme = Get-ChildItem $ThemeSettings.MyThemesLocation | Where-Object { $_.Name -eq $theme_name } | Get-Content
+$git_theme = Get-GitFile $git_ps_theme_url
+if ($local_theme -ne $git_theme) {
+  Write-Information "Updating local theme content from github."
+  $git_theme | Out-File "$($ThemeSettings.MyThemesLocation)\$theme_name"
+}
+Set-Theme (Get-Item "$($ThemeSettings.MyThemesLocation)\$theme_name").BaseName
+
 # Update local profile from github repo (if current does not match)
 $git_ps_profile = Get-GitFile $git_ps_profile_url
 $local_profile = Get-Content $profile -Raw
 if ($local_profile -ne $git_ps_profile) {
-  Write-Information "Updating local profile from github location."
+  Write-Information "Updating local profile from github."
   $git_ps_profile | Out-File $profile
 }
