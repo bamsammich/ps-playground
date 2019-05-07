@@ -47,8 +47,10 @@ function Initialize-Profile {
     }
   }
 }
+
 $psgallery_modules = @('posh-git', 'oh-my-posh', 'Get-ChildItemColor')
 $git_ps_profile_url = 'https://raw.githubusercontent.com/bamsammich/PowerShell/master/Profile/Profile.ps1'
+$git_ps_theme_url = ''
 
 # Ensure Profile used by this session exists
 Initialize-Profile
