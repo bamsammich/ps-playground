@@ -63,6 +63,3 @@ if ($local_profile -ne $git_ps_profile) {
   Write-Information "Updating local profile from github location."
   $git_ps_profile | Out-File $profile
 }
-else {
-  Write-Information "Matched"
-}
