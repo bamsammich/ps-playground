@@ -64,7 +64,7 @@ $local_theme = Get-ChildItem $ThemeSettings.MyThemesLocation | Where-Object { $_
 $git_theme = Get-GitFile $git_ps_theme_url
 if ($local_theme -ne $git_theme) {
   Write-Information "Updating local theme content from github."
-  $git_theme | Out-File "$($ThemeSettings.MyThemesLocation)\$theme_name"
+  $git_theme | Out-File "$($ThemeSettings.MyThemesLocation)\$theme_name" -Force
 }
 Set-Theme (Get-Item "$($ThemeSettings.MyThemesLocation)\$theme_name").BaseName
 
@@ -73,5 +73,5 @@ $git_ps_profile = Get-GitFile $git_ps_profile_url
 $local_profile = Get-Content $profile -Raw
 if ($local_profile -ne $git_ps_profile) {
   Write-Information "Updating local profile from github."
-  $git_ps_profile | Out-File $profile
+  $git_ps_profile | Out-File $profile -Force
 }
