@@ -1,4 +1,3 @@
-#requires -RunAsAdministrator
 function Import-PSGalleryModule {
   [CmdletBinding()]
   param (
