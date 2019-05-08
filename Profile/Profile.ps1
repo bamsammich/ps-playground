@@ -47,8 +47,13 @@ function Initialize-Profile {
     }
   }
 }
+$psgallery_modules = [System.Collections.Generic.List[string]]::new()
+# PowerShell Development Modules
+('Pester', 'Plaster', 'psake', 'platyPS', 'PowerShellBuild', 'Stucco') | ForEach-Object { $psgallery_modules.Add($_) }
+# PowerShell Commandline Quality of Life Modules
+('posh-git', 'oh-my-posh', 'Get-ChildItemColor') | ForEach-Object { $psgallery_modules.Add($_) }
+if (-not (Get-Module 'PSReadline')) {$psgallery_modules.Add('PSReadline')}
 
-$psgallery_modules = @('posh-git', 'oh-my-posh', 'Get-ChildItemColor')
 $git_ps_profile_url = 'https://raw.githubusercontent.com/bamsammich/PowerShell/master/Profile/Profile.ps1'
 $git_ps_theme_url = 'https://raw.githubusercontent.com/bamsammich/PowerShell/master/Themes/Paradox_custom.psm1'
 
