@@ -44,12 +44,7 @@ function Write-Theme {
     $prompt += Write-Prompt -Object "$($sl.PromptSymbols.ElevatedSymbol) " -ForegroundColor $sl.Colors.AdminIconForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
   }
 
-  $user = [System.Environment]::UserName
-  $computer = [System.Environment]::MachineName
   $path = Get-FullPath -dir $pwd
-  if (Test-NotDefaultUser($user)) {
-    $prompt += Write-Prompt -Object "$user@$computer " -ForegroundColor $sl.Colors.SessionInfoForegroundColor -BackgroundColor $sl.Colors.SessionInfoBackgroundColor
-  }
 
   if (Test-VirtualEnv) {
     $prompt += Write-Prompt -Object "$($sl.PromptSymbols.SegmentForwardSymbol) " -ForegroundColor $sl.Colors.SessionInfoBackgroundColor -BackgroundColor $sl.Colors.VirtualEnvBackgroundColor
