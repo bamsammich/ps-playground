@@ -46,6 +46,7 @@ function Initialize-Profile {
     }
   }
 }
+
 function Test-IsAdministrator {
   $current_principal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 
@@ -82,9 +83,14 @@ $host_title = [ordered]@{
 # Set the Window Title
 $host.ui.RawUI.WindowTitle = "PowerShell [ $($host_title.Values -join ' | ') ]"
 
+# Ensure theme location exists
+if (-not (Test-Path $ThemeSettings.MyThemesLocation)) {
+  New-Item $ThemeSettings.MyThemesLocation -Force
+}
+
 # Set Theme
 $theme_name = ($git_ps_theme_url -split '/' | Select-Object -Last 1).Trim()
-$local_theme = Get-ChildItem $ThemeSettings.MyThemesLocation | Where-Object { $_.Name -eq $theme_name } | Get-Content
+$local_theme = Get-ChildItem $ThemeSettings.MyThemesLocation | Where-Object { $_.Name -eq $theme_name } | Get-Content -ErrorAction SilentlyContinue
 $git_theme = Get-GitFile $git_ps_theme_url
 if ($local_theme -ne $git_theme) {
   Write-Information "Updating local theme content from github."
@@ -99,3 +105,4 @@ if ($local_profile -ne $git_ps_profile) {
   Write-Information "Updating local profile from github."
   $git_ps_profile | Out-File $profile -Force
 }
+
