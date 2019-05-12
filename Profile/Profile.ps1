@@ -85,7 +85,7 @@ $host.ui.RawUI.WindowTitle = "PowerShell [ $($host_title.Values -join ' | ') ]"
 
 # Ensure theme location exists
 if (-not (Test-Path $ThemeSettings.MyThemesLocation)) {
-  New-Item $ThemeSettings.MyThemesLocation -Force
+  New-Item $ThemeSettings.MyThemesLocation -ItemType Directory -Force
 }
 
 # Set Theme
