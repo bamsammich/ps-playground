@@ -89,15 +89,18 @@ if (-not (Test-Path $ThemeSettings.MyThemesLocation)) {
 }
 
 # Set Theme
-<# $theme_name = ($git_ps_theme_url -split '/' | Select-Object -Last 1).Trim()
+$theme_name = ($git_ps_theme_url -split '/' | Select-Object -Last 1).Trim()
 $local_theme = Get-ChildItem $ThemeSettings.MyThemesLocation | Where-Object { $_.Name -eq $theme_name } | Get-Content -ErrorAction SilentlyContinue
 $git_theme = Get-GitFile $git_ps_theme_url
 if ($local_theme -ne $git_theme) {
   Write-Information "Updating local theme content from github."
   $git_theme | Out-File "$($ThemeSettings.MyThemesLocation)\$theme_name" -Force
 }
-Set-Theme (Get-Item "$($ThemeSettings.MyThemesLocation)\$theme_name").BaseName #>
-Set-Theme Paradox
+Set-Theme (Get-Item "$($ThemeSettings.MyThemesLocation)\$theme_name").BaseName
+
+Set-PSReadlineOption -TokenKind Parameter -ForegroundColor DarkYellow
+Set-PSReadlineOption -TokenKind Operator -ForegroundColor DarkYellow
+Set-PSReadlineOption -TokenKind Variable -ForegroundColor Green
 
 # Update local profile from github repo (if current does not match)
 $git_ps_profile = Get-GitFile $git_ps_profile_url
